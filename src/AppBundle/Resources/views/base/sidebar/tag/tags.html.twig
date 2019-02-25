@@ -1,0 +1,3 @@
+{% for tag in tags %}
+    <a href="{{ path('tag_article', {'name': tag}) }}">{{ tag }}</a>
+{% endfor %}

@@ -1,0 +1,64 @@
+{% extends '@App/base/base.html.twig' %}
+
+{% block title %}Articles{% endblock %}
+
+{% block body %}
+    {% for article in articles %}
+        <div class="card mb-4">
+            {% if article.thumbnail is empty %}
+                <img class="card-img-top" src="{{ asset('images/no-thumbnail.jpg') }}">
+            {% else %}
+                <img class="card-img-top" src="{{ asset('/uploads/images/thumbnails/' ~ article.thumbnail) }}">
+            {% endif %}
+            <div class="card-body">
+                <h2 class="card-title">{{ article.title }}</h2>
+                <p class="card-text">{{ article.text }}</p>
+                <a href="{{ path('articles_show', {'id': article.id}) }}" class="btn btn-primary">Read More &rarr;</a>
+            </div>
+            <div class="card-footer text-muted">
+                <div class="row">
+                    <div class="col-md-9 justify-content-center align-self-center">
+                        Posted on {{ article.createdAt|date('F d, Y') }} by {{ article.author.username }}
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <a class="btn btn-light text-primary"
+                           href="{{ path('articles_show', {'id': article.id}) }}#comments"
+                           role="button">
+                            {#TODO replace with function of twig extension like `comment_count(article)` #}
+                            {% if article.comments|length > 0 %}
+                                {% set commentCount = 0 %}
+                                {% for comment in article.comments %}
+                                    {% if comment.isDeleted == false %}
+                                        {% set commentCount = commentCount + 1 %}
+                                    {% endif %}
+                                {% endfor %}
+                                {{ commentCount }}
+                            {% endif %}
+                            <i class="fa fa-comment"></i>
+                        </a>
+                        <button class="ajax-like btn btn-light text-primary"
+                                role="button"
+                                data-link="{{ path('like_article', {'id': article.id}) }}"
+                                data-id="{{ article.id }}">
+                            <span id="likes-count-{{ article.id }}">
+                                {% if article.articleLikes|length > 0 %}
+                                    {{ article.articleLikes|length }}
+                                {% endif %}
+                            </span>
+                            <i class="fa fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="col-md-3 mx-auto">
+        {{ knp_pagination_render(articles) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/ajax_like.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends '@App/base/admin_panel/base.html.twig' %}
+
+{% block title %}Admin panel - Add article{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        {{ form_start(form) }}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">Add article</h2>
+                <hr>
+                <div class="mb-2">
+                    {{ form_errors(form.title) }}
+                    {{ form_widget(form.title) }}
+                    {{ form_errors(form.text) }}
+                    {{ form_widget(form.text) }}
+                    {{ form_errors(form.plainTags) }}
+                    {{ form_widget(form.plainTags) }}
+                    <div class="ml-2 mt-3">
+                        <p class="h6">Thumbnail:</p>
+                        {{ form_errors(form.thumbnail) }}
+                        {{ form_widget(form.thumbnail) }}
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+                <div class="row text-right pl-2 float-left">
+                    <a href="{{ path('admin_panel_articles') }}" class="btn btn-dark">To articles list</a>
+                </div>
+                <div class="row pr-2 float-right">
+                    <input type="submit" class="btn btn-success" value="Save changes">
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+
+
+
+

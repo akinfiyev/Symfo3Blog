@@ -1,0 +1,25 @@
+{% extends '@App/base/base.html.twig' %}
+
+{% block title %}Articles{% endblock %}
+
+{% block body %}
+    <h1 class="h3">Articles with tag '{{ tags['0'].name }}':</h1>
+    {% for tag in tags %}
+        <div class="card mb-4">
+            {% if tag.article.thumbnail is empty %}
+                <img class="card-img-top" src="{{ asset('images/no-thumbnail.jpg') }}" alt="">
+            {% else %}
+                <img class="card-img-top" src="{{ asset('uploads/images/' ~ tag.article.thumbnail) }}" alt="">
+            {% endif %}
+            <div class="card-body">
+                <h2 class="card-title">{{ tag.article.title }}</h2>
+                <p class="card-text">{{ tag.article.text }}</p>
+                <a href="{{ path('articles_show', {'id': tag.article.id}) }}" class="btn btn-primary">Read More &rarr;</a>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="col-md-3 mx-auto">
+    {{ knp_pagination_render(tags) }}
+    </div>
+{% endblock %}

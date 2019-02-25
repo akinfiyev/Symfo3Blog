@@ -1,0 +1,42 @@
+{% extends '@App/base/base.html.twig' %}
+{% import "@App/macros/avatar_output.html.twig" as avatar_output %}
+
+{% block title %}Edit profile{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Edit profile</h2>
+            <hr>
+            {% if message is defined and message == 'success' %}
+                <div class="alert alert-primary text-center" role="alert">
+                    Profile has been edited successful!
+                </div>
+            {% endif %}
+            <div class="text-center mb-4">
+                {{ avatar_output.outputMediumAvatar(user.avatar) }}
+                <br>
+                {{ form_errors(form.avatar) }}
+                {{ form_widget(form.avatar) }}
+            </div>
+            <input type="text" class="form-control" value="ID: {{ user.id }}" disabled>
+            <input type="text" class="form-control" value="Roles: {{ user.roles|join }}" disabled>
+            {{ form_errors(form.username) }}
+            {{ form_widget(form.username) }}
+            {{ form_errors(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.plainPassword) }}
+            {{ form_widget(form.plainPassword) }}
+        </div>
+        <div class="card-footer text-muted">
+            <div class="row text-right pl-2 float-left">
+                <a href="{{ path('default') }}" class="btn btn-dark">Back to home page</a>
+            </div>
+            <div class="row pr-2 float-right">
+                <input type="submit" class="btn btn-success" value="Save changes">
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

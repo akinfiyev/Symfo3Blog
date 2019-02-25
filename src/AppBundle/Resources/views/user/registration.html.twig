@@ -1,0 +1,18 @@
+{% extends '@App/base/base.html.twig' %}
+
+{% block title %}Registration{% endblock %}
+
+{% block body %}
+    <div class="col-md-6 mx-auto">
+        <h1 class="h3 mb-3 font-weight-normal">Registration form</h1>
+        {{ form_start(form) }}
+        {{ form_errors(form.username) }}
+        {{ form_widget(form.username) }}
+        {{ form_errors(form.email) }}
+        {{ form_widget(form.email) }}
+        {{ form_errors(form.plainPassword) }}
+        {{ form_widget(form.plainPassword) }}
+        <button class="btn btn-lg btn-primary w-100" type="submit">Register</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

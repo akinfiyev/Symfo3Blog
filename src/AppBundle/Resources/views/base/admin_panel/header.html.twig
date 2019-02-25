@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{{ path('admin_panel') }}">SymfoBlog <small class="text-muted">ADMIN PANEL</small></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ path('default') }}">Go to Blog</a></li>
+                <li class="nav-item dropdown{% if app.request.attributes.get('_route') starts with 'admin_panel_articles' %} active{% endif %}">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Articles
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ path('admin_panel_articles') }}">All articles</a>
+                        <a class="dropdown-item" href="{{ path('admin_panel_articles_unapproved') }}">Unapproved articles</a>
+                        <a class="dropdown-item" href="{{ path('admin_panel_articles_add') }}">Add article</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown{% if app.request.attributes.get('_route') starts with 'admin_panel_users' %} active{% endif %}">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Users list
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ path('admin_panel_users') }}">All</a>
+                        <a class="dropdown-item" href="{{ path('admin_panel_users_blogger_requests') }}">Blogger requests</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a class="nav-link{% if app.request.attributes.get('_route') == 'admin_panel_comments' %} active{% endif %}" href="{{ path('admin_panel_comments') }}">Comments</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ path('logout') }}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

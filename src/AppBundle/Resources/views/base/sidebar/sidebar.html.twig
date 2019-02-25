@@ -1,0 +1,22 @@
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <div class="card mb-3">
+        <h5 class="card-header">Profile</h5>
+        <div class="card-body">
+            {{ render(controller('AppBundle:User:showUserProfileSidebar')) }}
+        </div>
+    </div>
+{% else %}
+    <div class="card mb-3">
+        <h5 class="card-header">Login</h5>
+        <div class="card-body">
+            {{ render(controller('AppBundle:Security:login')) }}
+        </div>
+    </div>
+{% endif %}
+
+<div class="card mb-3">
+    <h5 class="card-header">Tags</h5>
+    <div class="card-body">
+        {{ render(controller('AppBundle:Tag:allTags')) }}
+    </div>
+</div>

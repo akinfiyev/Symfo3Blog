@@ -1,0 +1,56 @@
+{% extends '@App/base/admin_panel/base.html.twig' %}
+
+{% block title %}Admin panel - Edit article - ID#{{ article.id }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        {{ form_start(form) }}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">Edit article - ID#{{ article.id }}</h2>
+                <hr>
+                {% if message is defined and message == 'success' %}
+                    <div class="alert alert-primary text-center" role="alert">
+                        Article has been successfully saved!
+                    </div>
+                {% endif %}
+                <div class="mb-2">
+                    <div class="ml-2 mt-3 text-center">
+                        {#TODO replace with macro#}
+                        {% if article.thumbnail is empty %}
+                            <img src="{{ asset('images/no-thumbnail.jpg') }}" alt="" class="img-thumbnail w-50 mb-2">
+                        {% else %}
+                            <img src="{{ asset('/uploads/images/thumbnails/' ~ article.thumbnail) }}" alt=""
+                                 class="img-thumbnail w-50 mb-2">
+                        {% endif %}
+                        <p>
+                            Upload thumbnail:
+                            {{ form_errors(form.thumbnail) }}
+                            {{ form_widget(form.thumbnail) }}
+                        </p>
+                    </div>
+                    {{ form_errors(form.title) }}
+                    {{ form_widget(form.title) }}
+                    {{ form_errors(form.text) }}
+                    {{ form_widget(form.text) }}
+                    {{ form_errors(form.plainTags) }}
+                    {{ form_widget(form.plainTags) }}
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+                <div class="row text-right pl-2 float-left">
+                    <a href="{{ path('admin_panel_articles') }}" class="btn btn-dark">To articles list</a>
+                </div>
+                <div class="row pr-2 float-right">
+                    <input type="submit" class="btn btn-success" value="Save changes">
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+
+
+
+

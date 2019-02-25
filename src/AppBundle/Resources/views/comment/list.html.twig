@@ -1,0 +1,41 @@
+{% import "@App/macros/avatar_output.html.twig" as avatar_output %}
+
+{% if comments is empty %}
+    <div class="alert alert-success w-100 text-center">
+        Comments not found
+    </div>
+{% else %}
+    <div class="comments-list px-3">
+        {% for comment in comments %}
+            <div class="media mb-3">
+                <div class="media-body">
+                    <h4 class="media-heading user_name">
+                        {{ avatar_output.outputExtraSmallAvatar(comment.author.avatar) }}
+                        {{ comment.author.username }}
+                    </h4>
+                    {{ comment.text }}
+                </div>
+                <p class="text-right text-muted">
+                    <small>{{ comment.createdAt|date('H:i F d, Y') }}</small>
+                </p>
+            </div>
+        {% endfor %}
+        <div class="col-md-12 comments-pagination">
+            <div class="comments-pagination-body">
+                {{ knp_pagination_render(comments) }}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+
+<h3>Add comment</h3>
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+{{ form_start(form) }}
+{{ form_errors(form.text) }}
+{{ form_widget(form.text) }}
+<button class="btn btn-primary" type="submit">Submit</button>
+{{ form_end(form) }}
+{% else %}
+You need to be <a href="{{ path('user_registration') }}">login</a> to send comments.
+{% endif %}

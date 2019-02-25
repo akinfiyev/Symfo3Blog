@@ -1,0 +1,92 @@
+{% extends '@App/base/admin_panel/base.html.twig' %}
+{% import "@App/macros/avatar_output.html.twig" as avatar_output %}
+
+{% block title %}Admin panel - Users list{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Avatar</th>
+                <th scope="col">ID</th>
+                <th scope="col">Username</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Roles</th>
+                <th scope="col">Blogger role</th>
+                <th scope="col">Ban user</th>
+                <th scope="col">Edit profile</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr{% if user.hasRequestBloggerRole %} class="table-warning" title="This user want to be blogger"{% endif %}>
+                    <td>
+                        {{ avatar_output.outputSmallAvatar(user.avatar) }}
+                    </td>
+                    <th scope="row" class="align-middle">{{ user.id }}</th>
+                    <td class="align-middle">{{ user.username }}</td>
+                    <td class="align-middle">{{ user.email }}</td>
+                    <td class="align-middle">{% for role in user.roles %}{{ role|split('ROLE_')|join }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+                    <td class="align-middle">
+                        {# TODO replace with macro #}
+                        {% if 'ROLE_BANNED' not in user.roles and 'ROLE_ADMIN' not in user.roles %}
+                            {% if 'ROLE_BLOGGER' in user.roles %}
+                                <a class="btn btn-warning"
+                                   href="{{ path('admin_panel_users_make_blogger', {'id': user.id}) }}"
+                                   role="button">
+                                    <i class="fa fa-times"></i> Delete blogger role
+                                </a>
+                            {% else %}
+                                <a class="btn btn-success"
+                                   href="{{ path('admin_panel_users_make_blogger', {'id': user.id}) }}"
+                                   role="button">
+                                    <i class="fa fa-plus"></i> Add blogger role
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td class="align-middle">
+                        {# TODO replace with macro #}
+                        {% set additionalClassName = 'ROLE_BANNED' in user.roles ? 'btn-warning' : 'btn-danger' %}
+
+                        {% if 'ROLE_BANNED' in user.roles %}
+                            <a class="btn btn-warning"
+                               href="{{ path('admin_panel_users_ban', {'id': user.id}) }}"
+                               role="button">
+                                <i class="fa fa-level-up-alt"></i> Undo ban
+                            </a>
+                        {% else %}
+                            <a class="btn btn-danger"
+                               href="{{ path('admin_panel_users_ban', {'id': user.id}) }}"
+                               role="button">
+                                <i class="fa fa-ban"></i> Ban
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td class="align-middle">
+                        <a class="btn btn-primary"
+                           href="{{ path('admin_panel_users_edit', {'id': user.id}) }}"
+                           role="button">
+                            <i class="fa fa-edit"></i> Edit
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if users|length == 0 %}
+            <div class="text-center">
+                Users not found
+            </div>
+        {% endif %}
+        <div class="col-md-3 mx-auto">
+            {{ knp_pagination_render(users) }}
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
+

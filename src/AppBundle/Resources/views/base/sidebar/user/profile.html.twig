@@ -1,0 +1,22 @@
+<div class="text-center"><b>Hello, {{ user.username }}!</b></div>
+{% if user.avatar is empty %}
+    <div class="text-center mt-2 mb-2"><img src="{{ asset('images/no-avatar.svg') }}" alt="" width="100" height="100"></div>
+    <a href="{{ path('user_profile_edit') }}"><div class="btn w-100">Set avatar</div></a>
+{% else %}
+    <div class="text-center mt-2 mb-2"><img src="{{ asset('/uploads/images/avatars/' ~ user.avatar) }}" alt="" width="100" height="100"></div>
+    <a href="{{ path('user_profile_edit') }}"><div class="btn w-100">Change avatar</div></a>
+{% endif %}
+<hr class="mt-0">
+<div class="text-center">Role: {{ user.roles|join(', ') }}</div>
+<hr>
+{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('admin_panel') }}"><div class="btn btn-dark w-100">Admin panel</div></a>
+{% endif %}
+{% if is_granted('ROLE_BLOGGER') %}
+    <a href="{{ path('articles_add') }}"><div class="btn btn-light w-100">Add article</div></a>
+{% endif %}
+<a href="{{ path('user_profile_edit') }}"><div class="btn btn-light w-100">Edit profile</div></a>
+{% if not is_granted('ROLE_BLOGGER') and not user.hasRequestBloggerRole %}
+    <a href="{{ path('user_role_blogger_request') }}"><div class="btn btn-light w-100">I want to be blogger</div></a>
+{% endif %}
+<a href="{{ path('logout') }}"><div class="btn btn-light w-100">Logout</div></a>

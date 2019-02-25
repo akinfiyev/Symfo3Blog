@@ -1,0 +1,18 @@
+{% macro outputExtraSmallAvatar(avatar) %}
+    {% set avatarSrc =  avatar is empty ? asset('images/no-avatar.svg') : asset('/uploads/images/avatars/' ~ avatar) %}
+    <img src="{{ avatarSrc }}" alt="" width="20" height="20">
+{% endmacro %}
+
+{% macro outputSmallAvatar(avatar) %}
+    {% set avatarSrc =  avatar is empty ? asset('images/no-avatar.svg') : asset('/uploads/images/avatars/' ~ avatar) %}
+    <div class="text-center mt-2 mb-2"><img src="{{ avatarSrc }}" alt=""
+                                            width="50" height="50"></div>
+{% endmacro %}
+
+{% macro outputMediumAvatar(avatar) %}
+    {% set avatarSrc =  avatar is empty ? asset('images/no-avatar.svg') : asset('/uploads/images/avatars/' ~ avatar) %}
+    {% set text =  avatar is empty ? 'Set avatar' : 'Change avatar' %}
+    <div class="text-center mt-2 mb-2"><img src="{{ avatarSrc }}" alt="" width="100"
+                                            height="100"></div>
+    {{ text }}
+{% endmacro %}

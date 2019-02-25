@@ -1,0 +1,20 @@
+.form-control {
+    margin-bottom:  10px;
+}
+
+.user_name {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.comments-list .media {
+    border-bottom: 1px dotted #ccc;
+}
+
+.comments-pagination-body {
+    float:right !important;
+}
+
+.comments-pagination {
+    display: flow-root !important;
+}

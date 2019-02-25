@@ -1,0 +1,80 @@
+{% extends '@App/base/admin_panel/base.html.twig' %}
+
+{% block title %}Admin panel - Articles list{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Article text</th>
+                <th scope="col">Author</th>
+                <th scope="col">Tags</th>
+                <th scope="col">Created</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Approve</th>
+                <th scope="col">Link</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for article in articles %}
+                <tr>
+                    <th class="align-middle" scope="row">{{ article.id }}</th>
+                    <td class="align-middle">{{ article.title }}</td>
+                    <td class="align-middle">{{ article.text }}</td>
+                    <td class="align-middle">{{ article.author.username }}</td>
+                    <td class="align-middle">
+                        {% for tag in article.tags %}{{ tag.name }}{% if not loop.last %}, {% endif %}{% endfor %}
+                    </td>
+                    <td class="align-middle">{{ article.createdAt|date('H:i d F Y') }}</td>
+                    <td class="align-middle">
+                        <a class="btn"
+                           href="{{ path('admin_panel_articles_edit', {'id': article.id}) }}"
+                           role="button">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </td>
+                    <td class="align-middle text-center">
+                        {#TODO replace with macro#}
+                        {% if not article.isApproved %}
+                            <a class="btn btn-success"
+                               href="{{ path('admin_panel_articles_approve', {'id': article.id}) }}"
+                               role="button">
+                                Approve
+                            </a>
+                        {% else %}
+                            <i class="fa fa-check"></i>
+                        {% endif %}
+                    </td>
+                    <td class="align-middle">
+                        <a class="btn"
+                           href="{{ path('articles_show', {'id': article.id}) }}"
+                           role="button">
+                            <i class="fa fa-link"></i>
+                        </a>
+                    </td>
+                    <td class="align-middle">
+                        <a class="btn"
+                           href="{{ path('admin_panel_articles_delete', {'id': article.id}) }}"
+                           role="button">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="col-md-3 mx-auto">
+            {{ knp_pagination_render(articles) }}
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
+
