@@ -1,2 +1,2 @@
 # Symfo3Blog
-SymfoBlog at Symfony 3.
+SymfoBlog project migrated to Symfony 3
